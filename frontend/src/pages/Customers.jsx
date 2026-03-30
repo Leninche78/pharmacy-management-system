@@ -41,7 +41,7 @@ const Customers = () => {
         c.id, c.name, c.phone || '', c.email || '', c.address || ''
       ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
     ].join('\n');
-
+//u
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
