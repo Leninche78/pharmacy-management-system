@@ -5,6 +5,11 @@ const Prescription = require('./Prescription');
 const Sale = require('./Sale');
 const SaleItem = require('./SaleItem');
 const Setting = require('./Setting');
+const Supplier = require('./Supplier');
+const PurchaseOrder = require('./PurchaseOrder');
+const PurchaseOrderItem = require('./PurchaseOrderItem');
+const Batch = require('./Batch');
+const Doctor = require('./Doctor');
 
 // Define Relationships
 
@@ -32,6 +37,30 @@ SaleItem.belongsTo(Sale, { foreignKey: 'saleId' });
 Product.hasMany(SaleItem, { foreignKey: 'productId' });
 SaleItem.belongsTo(Product, { foreignKey: 'productId' });
 
+// Supplier and PurchaseOrder relationship
+Supplier.hasMany(PurchaseOrder, { foreignKey: 'supplierId' });
+PurchaseOrder.belongsTo(Supplier, { foreignKey: 'supplierId' });
+
+// PurchaseOrder and PurchaseOrderItem relationship
+PurchaseOrder.hasMany(PurchaseOrderItem, { foreignKey: 'purchaseOrderId' });
+PurchaseOrderItem.belongsTo(PurchaseOrder, { foreignKey: 'purchaseOrderId' });
+
+// Product and PurchaseOrderItem relationship
+Product.hasMany(PurchaseOrderItem, { foreignKey: 'productId' });
+PurchaseOrderItem.belongsTo(Product, { foreignKey: 'productId' });
+
+// Product and Batch relationship
+Product.hasMany(Batch, { foreignKey: 'productId' });
+Batch.belongsTo(Product, { foreignKey: 'productId' });
+
+// Supplier and Batch relationship
+Supplier.hasMany(Batch, { foreignKey: 'supplierId' });
+Batch.belongsTo(Supplier, { foreignKey: 'supplierId' });
+
+// PurchaseOrder and Batch relationship
+PurchaseOrder.hasMany(Batch, { foreignKey: 'purchaseOrderId' });
+Batch.belongsTo(PurchaseOrder, { foreignKey: 'purchaseOrderId' });
+
 module.exports = {
   User,
   Product,
@@ -40,4 +69,9 @@ module.exports = {
   Sale,
   SaleItem,
   Setting,
+  Supplier,
+  PurchaseOrder,
+  PurchaseOrderItem,
+  Batch,
+  Doctor,
 };

@@ -26,6 +26,9 @@ const prescriptionRoutes = require('./routes/prescriptionRoutes');
 const saleRoutes = require('./routes/saleRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const settingRoutes = require('./routes/settingRoutes');
+const supplierRoutes = require('./routes/supplierRoutes');
+const purchaseOrderRoutes = require('./routes/purchaseOrderRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -34,6 +37,9 @@ app.use('/api/prescriptions', prescriptionRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/settings', settingRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/purchase-orders', purchaseOrderRoutes);
+app.use('/api/doctors', doctorRoutes);
 
 const PORT = process.env.PORT || 5000;
 
@@ -44,7 +50,7 @@ const startServer = async () => {
     await connectDB();
     console.log("✅ DB Connected");
 
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
     console.log("✅ DB Synced");
 
     app.listen(PORT, () => {

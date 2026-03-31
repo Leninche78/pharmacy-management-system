@@ -37,6 +37,10 @@ const Product = sequelize.define('Product', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  reorderThreshold: {
+    type: DataTypes.INTEGER,
+    defaultValue: 10,
+  },
 }, {
   timestamps: true,
 });

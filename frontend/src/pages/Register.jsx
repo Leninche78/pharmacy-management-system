@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Mail, Lock, User, Briefcase } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, User, Briefcase, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState('pharmacist');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ const Register = () => {
         }
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message || err.response?.data?.error || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -122,13 +123,20 @@ const Register = () => {
                   <Lock size={18} />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field pl-11"
+                  className="input-field pl-11 pr-11"
                   placeholder="••••••••"
                 />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-1/2 -translate-y-1/2 right-3 p-1.5 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-200 hover:scale-110 focus:outline-none"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
             

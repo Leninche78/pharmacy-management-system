@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Save, Building2, Landmark, PhoneCall, CheckCircle } from 'lucide-react';
+import { Save, Building2, Landmark, PhoneCall, CheckCircle, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Settings = () => {
@@ -121,6 +121,17 @@ const Settings = () => {
                <input required type="number" step="0.01" min="0" name="taxRate" value={settings.taxRate || ''} onChange={handleChange} className="input-field py-3 text-xl font-black text-primary-600 dark:text-primary-400 text-center w-32" placeholder="5.0" />
                <span className="text-sm font-medium text-slate-500">Applied dynamically per transaction inside the POS subsystem.</span>
              </div>
+          </div>
+        </div>
+        
+        <div className="p-8 bg-slate-50 dark:bg-[#151b2b] border-t border-slate-200 dark:border-[#1e2538]">
+          <h2 className="text-xl font-extrabold text-slate-800 dark:text-white flex items-center gap-3 mb-6">
+            <Users size={24} className="text-emerald-500" />
+            Staff & Role Management
+          </h2>
+
+          <div className="text-slate-500 dark:text-slate-400">
+            Staff management interface (Add/Remove Users, Assign Roles) is under construction.
           </div>
         </div>
         

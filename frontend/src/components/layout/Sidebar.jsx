@@ -1,16 +1,25 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, PackageSearch, Receipt, Users, LogOut, FileText, BarChart3, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutDashboard, PackageSearch, Receipt, Users, LogOut, FileText, BarChart3, Settings as SettingsIcon, Truck, ShoppingCart, Stethoscope } from 'lucide-react';
 
 const Sidebar = () => {
-  const navItems = [
-    { to: '/dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-    { to: '/inventory', icon: <PackageSearch size={20} />, label: 'Inventory' },
-    { to: '/pos', icon: <Receipt size={20} />, label: 'Point of Sale' },
-    { to: '/customers', icon: <Users size={20} />, label: 'Customers' },
-    { to: '/prescriptions', icon: <FileText size={20} />, label: 'Prescriptions' },
-    { to: '/reports', icon: <BarChart3 size={20} />, label: 'Reports' },
-    { to: '/settings', icon: <SettingsIcon size={20} />, label: 'Settings' },
+  const storedUser = localStorage.getItem('user');
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const userRole = user?.role || 'cashier';
+
+  const allNavItems = [
+    { to: '/dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard', roles: ['admin', 'pharmacist', 'cashier'] },
+    { to: '/inventory', icon: <PackageSearch size={20} />, label: 'Inventory', roles: ['admin', 'pharmacist'] },
+    { to: '/suppliers', icon: <Truck size={20} />, label: 'Suppliers', roles: ['admin'] },
+    { to: '/purchase-orders', icon: <ShoppingCart size={20} />, label: 'Purchase Orders', roles: ['admin', 'pharmacist'] },
+    { to: '/doctors', icon: <Stethoscope size={20} />, label: 'Doctors', roles: ['admin', 'pharmacist'] },
+    { to: '/pos', icon: <Receipt size={20} />, label: 'Point of Sale', roles: ['admin', 'pharmacist', 'cashier'] },
+    { to: '/customers', icon: <Users size={20} />, label: 'Customers', roles: ['admin', 'pharmacist', 'cashier'] },
+    { to: '/prescriptions', icon: <FileText size={20} />, label: 'Prescriptions', roles: ['admin', 'pharmacist'] },
+    { to: '/reports', icon: <BarChart3 size={20} />, label: 'Reports', roles: ['admin'] },
+    { to: '/settings', icon: <SettingsIcon size={20} />, label: 'Settings', roles: ['admin'] },
   ];
+
+  const navItems = allNavItems.filter(item => item.roles.includes(userRole));
 
   const navigate = useNavigate();
   const location = useLocation();

@@ -1,20 +1,9 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite',
   logging: false,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 60000,
-    idle: 10000
-  }
 });
 
 const connectDB = async () => {

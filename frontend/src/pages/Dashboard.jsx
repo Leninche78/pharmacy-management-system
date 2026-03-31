@@ -46,7 +46,7 @@ const Dashboard = () => {
       if (type === 'products' || type === 'low-stock' || type === 'expiring') {
         const res = await axios.get('http://localhost:5000/api/products', { headers });
         if (type === 'low-stock') {
-          data = res.data.filter(p => p.stock > 0 && p.stock < 20);
+          data = res.data.filter(p => p.stock > 0 && p.stock <= (p.reorderThreshold || 10));
         } else if (type === 'expiring') {
           const thirtyDays = new Date();
           thirtyDays.setDate(thirtyDays.getDate() + 30);

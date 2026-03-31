@@ -68,7 +68,67 @@ const login = async (req, res) => {
   }
 };
 
+const crypto = require('crypto');
+const { Op } = require('sequelize');
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'If that email is registered, a reset link will be sent.' });
+    }
+
+    // Generate token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // In a real app, send email here. For now, log and return it.
+    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    console.log(`\n\n[DEV-MOCK-EMAIL] Password Reset Link for ${email}:\n${resetUrl}\n\n`);
+
+    res.json({ message: 'If that email is registered, a reset link will be sent.', devResetToken: resetToken });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ message: 'Server error processing request.' });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findOne({
+      where: {
+        resetPasswordToken: token,
+        resetPasswordExpires: { [Op.gt]: Date.now() },
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired password reset token.' });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    res.json({ message: 'Password has been safely reset! You can now log in.' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ message: 'Server error resetting password.' });
+  }
+};
+
 module.exports = {
   register,
-  login
+  login,
+  forgotPassword,
+  resetPassword
 };
