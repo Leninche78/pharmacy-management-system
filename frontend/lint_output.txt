@@ -1,0 +1,140 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Customers.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Dashboard.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Doctors.jsx
+   6:10  error  'doctors' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+   7:10  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+  10:5   error  Error: Cannot access variable before it is declared
+
+`fetchDoctors` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+   8 |
+   9 |   useEffect(() => {
+> 10 |     fetchDoctors();
+     |     ^^^^^^^^^^^^ `fetchDoctors` accessed before it is declared
+  11 |   }, []);
+  12 |
+  13 |   const fetchDoctors = async () => {
+
+  11 |   }, []);
+  12 |
+> 13 |   const fetchDoctors = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 14 |     try {
+     | ^^^^^^^^^
+> 15 |       const response = await axios.get('/api/doctors', {
+     …
+     | ^^^^^^^^^
+> 23 |     }
+     | ^^^^^^^^^
+> 24 |   };
+     | ^^^^^ `fetchDoctors` is declared here
+  25 |
+  26 |   return (
+  27 |     <div className="p-8">  react-hooks/immutability
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/ForgotPassword.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Inventory.jsx
+    1:31  error  'useRef' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                    no-unused-vars
+    4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                    no-unused-vars
+  168:9   error  'lowStockCount' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+  169:9   error  'outOfStockCount' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  170:9   error  'criticalItems' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Login.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/POS.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Prescriptions.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/PurchaseOrders.jsx
+   6:10  error  'purchaseOrders' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 no-unused-vars
+   7:10  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+  10:5   error  Error: Cannot access variable before it is declared
+
+`fetchPurchaseOrders` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+   8 |
+   9 |   useEffect(() => {
+> 10 |     fetchPurchaseOrders();
+     |     ^^^^^^^^^^^^^^^^^^^ `fetchPurchaseOrders` accessed before it is declared
+  11 |   }, []);
+  12 |
+  13 |   const fetchPurchaseOrders = async () => {
+
+  11 |   }, []);
+  12 |
+> 13 |   const fetchPurchaseOrders = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 14 |     try {
+     | ^^^^^^^^^
+> 15 |       const response = await axios.get('/api/purchase-orders', {
+     …
+     | ^^^^^^^^^
+> 23 |     }
+     | ^^^^^^^^^
+> 24 |   };
+     | ^^^^^ `fetchPurchaseOrders` is declared here
+  25 |
+  26 |   return (
+  27 |     <div className="p-8">  react-hooks/immutability
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Register.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Reports.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/ResetPassword.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Settings.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Suppliers.jsx
+   6:10  error  'suppliers' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        no-unused-vars
+   7:10  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  10:5   error  Error: Cannot access variable before it is declared
+
+`fetchSuppliers` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+   8 |
+   9 |   useEffect(() => {
+> 10 |     fetchSuppliers();
+     |     ^^^^^^^^^^^^^^ `fetchSuppliers` accessed before it is declared
+  11 |   }, []);
+  12 |
+  13 |   const fetchSuppliers = async () => {
+
+  11 |   }, []);
+  12 |
+> 13 |   const fetchSuppliers = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 14 |     try {
+     | ^^^^^^^^^
+> 15 |       const response = await axios.get('/api/suppliers', {
+     …
+     | ^^^^^^^^^
+> 23 |     }
+     | ^^^^^^^^^
+> 24 |   };
+     | ^^^^^ `fetchSuppliers` is declared here
+  25 |
+  26 |   return (
+  27 |     <div className="p-8">  react-hooks/immutability
+
+✖ 24 problems (24 errors, 0 warnings)
+

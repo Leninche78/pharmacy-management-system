@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const purchaseOrderController = require('../controllers/purchaseOrderController');
-const { authenticateToken } = require('../middleware/authMiddleware');
+const { authenticateToken, authorizeRole } = require('../middleware/authMiddleware');
 
-router.get('/', authenticateToken, purchaseOrderController.getAllPurchaseOrders);
-router.get('/:id', authenticateToken, purchaseOrderController.getPurchaseOrderById);
-router.post('/', authenticateToken, purchaseOrderController.createPurchaseOrder);
-router.put('/:id/status', authenticateToken, purchaseOrderController.updatePurchaseOrderStatus);
+const allowAdminAndPharmacist = authorizeRole('admin', 'pharmacist');
+
+router.get('/', authenticateToken, allowAdminAndPharmacist, purchaseOrderController.getAllPurchaseOrders);
+router.get('/:id', authenticateToken, allowAdminAndPharmacist, purchaseOrderController.getPurchaseOrderById);
+router.post('/', authenticateToken, allowAdminAndPharmacist, purchaseOrderController.createPurchaseOrder);
+router.put('/:id/status', authenticateToken, allowAdminAndPharmacist, purchaseOrderController.updatePurchaseOrderStatus);
 
 module.exports = router;

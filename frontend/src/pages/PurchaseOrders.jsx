@@ -1,27 +1,25 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Plus, Search, Edit2, Trash2, ShoppingCart } from 'lucide-react';
+import api from '../api/axiosInstance';
+import { Plus, ShoppingCart } from 'lucide-react';
 
 const PurchaseOrders = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPurchaseOrders();
-  }, []);
-
   const fetchPurchaseOrders = async () => {
     try {
-      const response = await axios.get('/api/purchase-orders', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const response = await api.get('/purchase-orders');
       setPurchaseOrders(response.data);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching POs:', error);
+    } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPurchaseOrders();
+  }, []);
 
   return (
     <div className="p-8">
@@ -41,7 +39,7 @@ const PurchaseOrders = () => {
       {/* Table Placeholder */}
       <div className="bg-white dark:bg-[#151b2b] rounded-2xl shadow-sm border border-slate-200 dark:border-[#1e2538] overflow-hidden">
         <div className="p-8 text-center text-slate-500">
-          Purchase Orders module under construction.
+          {loading ? 'Loading records...' : `Purchase Orders module under construction. (${purchaseOrders.length} records found)`}
         </div>
       </div>
     </div>

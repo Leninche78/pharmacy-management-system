@@ -28,16 +28,26 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
+            
+            {/* Accessible by all authenticated roles */}
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="inventory" element={<Inventory />} />
-            <Route path="suppliers" element={<Suppliers />} />
-            <Route path="purchase-orders" element={<PurchaseOrders />} />
-            <Route path="doctors" element={<Doctors />} />
             <Route path="pos" element={<POS />} />
             <Route path="customers" element={<Customers />} />
-            <Route path="prescriptions" element={<Prescriptions />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="settings" element={<Settings />} />
+
+            {/* Admin and Pharmacist only */}
+            <Route element={<ProtectedRoute allowedRoles={['admin', 'pharmacist']} />}>
+              <Route path="inventory" element={<Inventory />} />
+              <Route path="purchase-orders" element={<PurchaseOrders />} />
+              <Route path="doctors" element={<Doctors />} />
+              <Route path="prescriptions" element={<Prescriptions />} />
+            </Route>
+
+            {/* Admin only */}
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+              <Route path="suppliers" element={<Suppliers />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

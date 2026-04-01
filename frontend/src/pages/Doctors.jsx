@@ -1,27 +1,25 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 import { Plus, Stethoscope } from 'lucide-react';
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get('/api/doctors', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const response = await api.get('/doctors');
       setDoctors(response.data);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching doctors:', error);
+    } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
 
   return (
     <div className="p-8">
@@ -41,7 +39,7 @@ const Doctors = () => {
       {/* Table Placeholder */}
       <div className="bg-white dark:bg-[#151b2b] rounded-2xl shadow-sm border border-slate-200 dark:border-[#1e2538] overflow-hidden">
         <div className="p-8 text-center text-slate-500">
-          Doctors module under construction.
+          {loading ? 'Loading records...' : `Doctors module under construction. (${doctors.length} records found)`}
         </div>
       </div>
     </div>

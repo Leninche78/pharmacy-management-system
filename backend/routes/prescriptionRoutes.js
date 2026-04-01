@@ -5,9 +5,10 @@ const { authenticateToken, authorizeRole } = require('../middleware/authMiddlewa
 
 router.use(authenticateToken);
 
-// Only pharmacists and admins should ideally manage prescriptions
-router.post('/', authorizeRole('admin', 'pharmacist'), prescriptionController.createPrescription);
-router.get('/', prescriptionController.getAllPrescriptions);
-router.get('/customer/:customerId', prescriptionController.getPrescriptionsByCustomerId);
+const allowAdminAndPharmacist = authorizeRole('admin', 'pharmacist');
+
+router.post('/', allowAdminAndPharmacist, prescriptionController.createPrescription);
+router.get('/', allowAdminAndPharmacist, prescriptionController.getAllPrescriptions);
+router.get('/customer/:customerId', allowAdminAndPharmacist, prescriptionController.getPrescriptionsByCustomerId);
 
 module.exports = router;

@@ -1,27 +1,25 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Plus, Search, Edit2, Trash2, Truck } from 'lucide-react';
+import api from '../api/axiosInstance';
+import { Plus, Truck } from 'lucide-react';
 
 const Suppliers = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchSuppliers();
-  }, []);
-
   const fetchSuppliers = async () => {
     try {
-      const response = await axios.get('/api/suppliers', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const response = await api.get('/suppliers');
       setSuppliers(response.data);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching suppliers:', error);
+    } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchSuppliers();
+  }, []);
 
   return (
     <div className="p-8">
@@ -41,7 +39,7 @@ const Suppliers = () => {
       {/* Table Placeholder */}
       <div className="bg-white dark:bg-[#151b2b] rounded-2xl shadow-sm border border-slate-200 dark:border-[#1e2538] overflow-hidden">
         <div className="p-8 text-center text-slate-500">
-          Suppliers module under construction.
+           {loading ? 'Loading records...' : `Suppliers module under construction. (${suppliers.length} records found)`}
         </div>
       </div>
     </div>
