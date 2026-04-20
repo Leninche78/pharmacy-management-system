@@ -30,7 +30,7 @@ const PurchaseOrders = () => {
           </h1>
           <p className="text-slate-500 mt-1">Manage stock ordering and receiving</p>
         </div>
-        <button className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl transition-all">
+        <button className="btn-primary flex items-center gap-2 shadow-primary-500/30">
           <Plus size={20} />
           <span>Create PO</span>
         </button>

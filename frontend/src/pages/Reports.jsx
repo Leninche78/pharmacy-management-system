@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import { TrendingUp, ShoppingBag, CreditCard, Calendar as CalendarIcon, FileBarChart } from 'lucide-react';
-import { motion } from 'framer-motion';
+
 
 const Reports = () => {
   const [sales, setSales] = useState([]);

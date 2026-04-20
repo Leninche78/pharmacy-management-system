@@ -1,0 +1,44 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Customers.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Dashboard.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/ForgotPassword.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Inventory.jsx
+    1:31  error  'useRef' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                    no-unused-vars
+    4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                    no-unused-vars
+  170:9   error  'lowStockCount' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+  171:9   error  'outOfStockCount' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  172:9   error  'criticalItems' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Login.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/POS.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Prescriptions.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Register.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Reports.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/ResetPassword.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/home/dark-divine/gemini/antigravity/scratch/pharmacy-management-system-main/frontend/src/pages/Settings.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+✖ 15 problems (15 errors, 0 warnings)
+

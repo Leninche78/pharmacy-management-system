@@ -39,6 +39,8 @@ const createSale = async (req, res) => {
       paymentMethod
     }, { transaction });
 
+    let calculatedTotalTax = 0;
+
     // Process each item
     for (const item of items) {
       const product = await Product.findByPk(item.productId, { transaction });
@@ -54,15 +56,26 @@ const createSale = async (req, res) => {
       // Deduct stock
       await product.update({ stock: product.stock - item.quantity }, { transaction });
 
+      // GST Calculation
+      const itemSubtotal = item.quantity * item.unitPrice;
+      const gstRateApplied = product.gstRate || 0;
+      const itemTaxAmount = itemSubtotal * (gstRateApplied / 100);
+      calculatedTotalTax += itemTaxAmount;
+
       // Create SaleItem record
       await SaleItem.create({
         saleId: sale.id,
         productId: item.productId,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
-        subtotal: item.quantity * item.unitPrice,
+        subtotal: itemSubtotal,
+        gstRate: gstRateApplied,
+        taxAmount: itemTaxAmount,
       }, { transaction });
     }
+
+    // Update the sale record with the total tax
+    await sale.update({ taxAmount: calculatedTotalTax }, { transaction });
 
     // Update Customer points
     if (customerRef) {

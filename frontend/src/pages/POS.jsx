@@ -43,7 +43,7 @@ const POS = () => {
       if (existingItem.quantity >= product.stock) return alert('Cannot exceed available stock');
       setCart(cart.map(item => item.productId === product.id ? { ...item, quantity: item.quantity + 1, subtotal: (item.quantity + 1) * item.unitPrice } : item));
     } else {
-      setCart([...cart, { productId: product.id, name: product.name, unitPrice: product.price, quantity: 1, subtotal: Number(product.price) }]);
+      setCart([...cart, { productId: product.id, name: product.name, unitPrice: product.price, quantity: 1, subtotal: Number(product.price), gstRate: product.gstRate || 0 }]);
     }
   }, [cart]);
 
@@ -101,8 +101,7 @@ const POS = () => {
   const removeFromCart = (productId) => setCart(cart.filter(item => item.productId !== productId));
 
   const totalAmount = cart.reduce((sum, item) => sum + item.subtotal, 0);
-  const taxRate = globalSettings?.taxRate ? Number(globalSettings.taxRate) : 0;
-  const taxAmount = (totalAmount * taxRate) / 100;
+  const taxAmount = cart.reduce((sum, item) => sum + (item.subtotal * (item.gstRate / 100)), 0);
   const finalAmount = Math.max(0, totalAmount + taxAmount - redeemPoints);
   const selectedCustomerObj = customers.find(c => c.id.toString() === selectedCustomerId);
 
@@ -121,7 +120,7 @@ const POS = () => {
       setReceiptData({
         saleId: payload.data.saleId,
         date: new Date().toLocaleString(),
-        items: [...cart], subtotal: totalAmount, taxAmount, taxRate, discount: Number(redeemPoints) || 0,
+        items: [...cart], subtotal: totalAmount, taxAmount, discount: Number(redeemPoints) || 0,
         total: finalAmount, paymentMethod, customerName: selectedCustomerObj ? selectedCustomerObj.name : 'Guest',
         earnedPoints: Math.floor(finalAmount / 100)
       });
@@ -187,7 +186,12 @@ const POS = () => {
 
              <div className="font-mono text-xs space-y-1.5 border-b-2 border-dashed border-slate-300 pb-5 mb-5 text-slate-700">
                <div className="flex justify-between font-semibold"><span>Subtotal:</span><span>{receiptData.subtotal.toFixed(2)}</span></div>
-               {receiptData.taxAmount > 0 && <div className="flex justify-between font-semibold"><span>Tax ({receiptData.taxRate}%):</span><span>{receiptData.taxAmount.toFixed(2)}</span></div>}
+               {receiptData.taxAmount > 0 && (
+                 <>
+                   <div className="flex justify-between font-semibold"><span>CGST:</span><span>{(receiptData.taxAmount / 2).toFixed(2)}</span></div>
+                   <div className="flex justify-between font-semibold"><span>SGST:</span><span>{(receiptData.taxAmount / 2).toFixed(2)}</span></div>
+                 </>
+               )}
                {receiptData.discount > 0 && <div className="flex justify-between font-bold text-slate-900"><span>Loyalty Discount:</span><span>-{receiptData.discount.toFixed(2)}</span></div>}
                <div className="flex justify-between font-black text-xl mt-3 pt-3 border-t border-slate-300 text-slate-900"><span>TOTAL:</span><span>₹{receiptData.total.toFixed(2)}</span></div>
                <div className="flex justify-between text-[10px] mt-3 uppercase font-bold text-slate-500"><span>Paid via:</span><span>{receiptData.paymentMethod}</span></div>
@@ -304,7 +308,7 @@ const POS = () => {
             </div>
             {taxAmount > 0 && (
               <div className="flex justify-between text-slate-500 dark:text-slate-400 text-sm font-medium">
-                 <span>Tax ({taxRate}%)</span><span>₹{taxAmount.toFixed(2)}</span>
+                 <span>GST (Calculated)</span><span>₹{taxAmount.toFixed(2)}</span>
               </div>
             )}
             {redeemPoints > 0 && (

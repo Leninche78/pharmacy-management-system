@@ -41,6 +41,10 @@ const Product = sequelize.define('Product', {
     type: DataTypes.INTEGER,
     defaultValue: 10,
   },
+  gstRate: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0, // 0, 5, 12, 18, 28
+  },
 }, {
   timestamps: true,
 });

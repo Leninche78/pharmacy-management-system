@@ -16,6 +16,11 @@ const Sale = sequelize.define('Sale', {
     type: DataTypes.STRING, // e.g., 'cash', 'card'
     defaultValue: 'cash',
   },
+  taxAmount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0.00,
+  },
 }, {
   timestamps: true,
 });

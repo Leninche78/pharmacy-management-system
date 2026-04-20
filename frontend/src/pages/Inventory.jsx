@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Search, Edit2, Trash2, PackageSearch, Barcode as BarcodeIcon, Printer, BrainCircuit, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,7 +19,7 @@ const Inventory = () => {
   const [isBarcodeModalOpen, setIsBarcodeModalOpen] = useState(false);
   const [isStockModalOpen, setIsStockModalOpen] = useState(false);
   
-  const [newProduct, setNewProduct] = useState({ name: '', genericName: '', sku: '', category: '', price: '', stock: '', expiryDate: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', genericName: '', sku: '', category: '', price: '', stock: '', expiryDate: '', gstRate: 0 });
   const [editingProduct, setEditingProduct] = useState(null);
   const [activeBarcodeProduct, setActiveBarcodeProduct] = useState(null);
   const [stockProduct, setStockProduct] = useState(null);
@@ -70,6 +70,7 @@ const Inventory = () => {
       category: product.category || '',
       price: product.price,
       stock: product.stock,
+      gstRate: product.gstRate || 0,
       expiryDate: product.expiryDate ? new Date(product.expiryDate).toISOString().split('T')[0] : ''
     });
     setIsEditModalOpen(true);
@@ -89,7 +90,8 @@ const Inventory = () => {
         sku: (newProduct.sku || '').trim() || `SKU-${Date.now()}`,
         expiryDate: newProduct.expiryDate || null,
         price: parseFloat(newProduct.price),
-        stock: parseInt(newProduct.stock, 10)
+        stock: parseInt(newProduct.stock, 10),
+        gstRate: parseInt(newProduct.gstRate, 10) || 0
       };
 
       if (editingProduct) {
@@ -165,9 +167,6 @@ const Inventory = () => {
   };
 
   // AI Insights logic
-  const lowStockCount = products.filter(p => p.stock > 0 && p.stock < 20).length;
-  const outOfStockCount = products.filter(p => p.stock === 0).length;
-  const criticalItems = products.filter(p => p.stock < 10);
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 pb-20 overflow-x-hidden">
@@ -195,7 +194,7 @@ const Inventory = () => {
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               onClick={() => {
                 setEditingProduct(null);
-                setNewProduct({ name: '', genericName: '', sku: '', category: '', price: '', stock: '', expiryDate: '' });
+                setNewProduct({ name: '', genericName: '', sku: '', category: '', price: '', stock: '', expiryDate: '', gstRate: 0 });
                 setIsEditModalOpen(true);
               }}
               className="btn-primary flex items-center gap-2 shadow-primary-500/30"
@@ -260,6 +259,11 @@ const Inventory = () => {
                     </td>
                     <td className="py-4 px-6">
                       <span className="font-extrabold text-primary-600 dark:text-primary-400">₹{Number(product.price).toFixed(2)}</span>
+                      {product.gstRate > 0 && (
+                        <span className="ml-2 text-[10px] font-bold bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded uppercase">
+                          {product.gstRate}% GST
+                        </span>
+                      )}
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
@@ -335,9 +339,21 @@ const Inventory = () => {
                     <input required type="number" min="0" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})} className="input-field font-bold" placeholder="100" />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider pl-1 mb-1">Expiry Date</label>
-                  <input type="date" value={newProduct.expiryDate} onChange={e => setNewProduct({...newProduct, expiryDate: e.target.value})} className="input-field" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider pl-1 mb-1">Expiry Date</label>
+                    <input type="date" value={newProduct.expiryDate} onChange={e => setNewProduct({...newProduct, expiryDate: e.target.value})} className="input-field" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider pl-1 mb-1">GST Rate (%)</label>
+                    <select value={newProduct.gstRate} onChange={e => setNewProduct({...newProduct, gstRate: e.target.value})} className="input-field font-bold">
+                      <option value="0">0% - No GST</option>
+                      <option value="5">5% GST</option>
+                      <option value="12">12% GST</option>
+                      <option value="18">18% GST</option>
+                      <option value="28">28% GST</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-[#1e2538] mt-6 pt-6">
                   <button type="button" onClick={() => setIsEditModalOpen(false)} className="btn-secondary w-full">Cancel</button>

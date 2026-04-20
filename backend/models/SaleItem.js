@@ -20,6 +20,15 @@ const SaleItem = sequelize.define('SaleItem', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  gstRate: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  taxAmount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0.00,
+  },
 }, {
   timestamps: true,
 });
